@@ -4,9 +4,9 @@
 	"main": "index.js",
 	"license": "MIT",
 	"scripts": {
-		"start": "node dist/src/index.js",
+		"start": "node dist/index.js",
 		"build": "yarn run tsc",
-		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/src/index.js\""
+		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
 	},
 	"dependencies": {
 		"@prisma/client": "^4.11.0",
@@ -19,7 +19,6 @@
 		"concurrently": "^7.6.0",
 		"nodemon": "^2.0.21",
 		"prisma": "^4.11.0",
-		"ts-node": "^10.9.1",
 		"typescript": "^5.0.2"
 	}
 }

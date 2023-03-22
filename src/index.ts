@@ -1,25 +1,21 @@
-import express, { Express, Request, Response } from 'express';
-import { config } from 'dotenv';
-import { tasksRouter } from './routes/tasks';
-import { projectsRouter } from './routes/projects';
+import express, { Express, Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
+import { config } from "dotenv";
 
 config();
-
+const prisma = new PrismaClient();
 const app: Express = express();
 const port = process.env.PORT || 8080;
 
-app.use((req, res, next) => {
-	console.log(`${req.method} ${req.path}`);
-	next();
+app.get("/", (req: Request, res: Response) => {
+	res.send("Express server running Typescript");
 });
 
-app.get('/', (req: Request, res: Response) => {
-	res.send('Please use /tasks or /projects to access the API.');
+app.get("/tasks", async (req: Request, res: Response) => {
+	const allTasks = await prisma.task.findMany();
+	res.json(allTasks);
 });
-
-app.use('/tasks', tasksRouter);
-app.use('/projects', projectsRouter);
 
 app.listen(port, () => {
-	console.log(`App listening on ${port} in ${process.env.NODE_ENV} mode.`);
+	console.log(`Server is running on port ${port}`);
 });
