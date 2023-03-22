@@ -17,6 +17,7 @@
 		"@types/node": "^18.15.5",
 		"concurrently": "^7.6.0",
 		"nodemon": "^2.0.21",
+		"prisma": "^4.11.0",
 		"typescript": "^5.0.2"
 	}
 }
