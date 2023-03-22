@@ -1,6 +1,8 @@
 import express, { Express, Request, Response } from 'express';
 import { config } from 'dotenv';
 import { tasksRouter } from './routes/tasks';
+import { projectsRouter } from './routes/projects';
+
 config();
 
 const app: Express = express();
@@ -16,6 +18,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/tasks', tasksRouter);
+app.use('/projects', projectsRouter);
 
 app.listen(port, () => {
 	console.log(`App listening on ${port} in ${process.env.NODE_ENV} mode.`);
