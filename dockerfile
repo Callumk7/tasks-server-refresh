@@ -14,8 +14,9 @@ COPY . .
 # Build app
 RUN yarn run prisma generate
 RUN yarn build
+RUN yarn run prisma generate
 RUN yarn install --production
 
 EXPOSE 8080
-CMD [ "node", "dist/index.js" ]
+CMD [ "node", "dist/src/index.js" ]
 
