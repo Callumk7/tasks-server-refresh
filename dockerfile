@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:19
 
 # Create app directory
 WORKDIR /app
@@ -11,6 +11,7 @@ RUN yarn install
 COPY . .
 
 RUN yarn build
+RUN yarn run prisma generate
 RUN yarn install --production
 
 EXPOSE 8080
