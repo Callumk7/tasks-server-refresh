@@ -1,14 +1,14 @@
-import express, { Router } from 'express';
-import prisma from '../client';
+import express, { Router } from "express";
+import prisma from "../client";
 
 export const tasksRouter: Router = express.Router();
 
-tasksRouter.get('/', async (req, res) => {
+tasksRouter.get("/", async (req, res) => {
 	const allTasks = await prisma.task.findMany();
 	res.json(allTasks);
 });
 
-tasksRouter.get('/:id', async (req, res) => {
+tasksRouter.get("/:id", async (req, res) => {
 	const task = await prisma.task.findUnique({
 		where: {
 			id: Number(req.params.id),
@@ -17,7 +17,7 @@ tasksRouter.get('/:id', async (req, res) => {
 	res.json(task);
 });
 
-tasksRouter.post('/', async (req, res) => {
+tasksRouter.post("/", async (req, res) => {
 	const task = await prisma.task.create({
 		data: {
 			title: req.body.title,
@@ -28,7 +28,7 @@ tasksRouter.post('/', async (req, res) => {
 	res.json(task);
 });
 
-tasksRouter.put('/:id', async (req, res) => {
+tasksRouter.put("/:id", async (req, res) => {
 	const task = await prisma.task.update({
 		where: {
 			id: Number(req.params.id),
