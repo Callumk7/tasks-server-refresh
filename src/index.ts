@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from "express";
+import cors from "cors";
 import { config } from "dotenv";
 import { tasksRouter } from "./routes/tasks";
 import { projectsRouter } from "./routes/projects";
@@ -7,6 +8,7 @@ config(); // Load environment variables
 const app: Express = express();
 const port = process.env.PORT || 8080;
 
+app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON bodies
 
 app.get("/", (req: Request, res: Response) => {
