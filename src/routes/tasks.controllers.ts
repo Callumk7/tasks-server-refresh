@@ -20,12 +20,11 @@ export const getTaskById = async (req: Request, res: Response) => {
 
 // create a task
 export const createTask = async (req: Request, res: Response) => {
-	const { title, body, completed } = req.body;
 	const newTask = await prisma.task.create({
 		data: {
-			title,
-			body,
-			completed,
+			title: req.body.title,
+			body: req.body.body,
+			completed: req.body.completed,
 		},
 	});
 	res.json(newTask);
