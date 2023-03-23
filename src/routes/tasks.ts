@@ -8,14 +8,14 @@ import {
 
 export const tasksRouter = Router();
 
-// GET /api/tasks
+// GET /tasks
 tasksRouter.get("/", getAllTasks);
 
-// GET /api/tasks/:id
+// GET /tasks/:id
 tasksRouter.get("/:id", getTaskById);
 
-// POST /api/tasks
+// POST /tasks
 tasksRouter.post("/", createTask);
 
-// PUT /api/tasks/:id
+// PUT /tasks/:id
 tasksRouter.put("/:id", updateTask);

@@ -1,14 +1,14 @@
-import express, { Router } from 'express';
-import prisma from '../client';
+import express, { Router } from "express";
+import prisma from "../client";
 
 export const projectsRouter = express.Router();
 
-projectsRouter.get('/', async (req, res) => {
+projectsRouter.get("/", async (req, res) => {
 	const allProjects = await prisma.project.findMany({});
 	res.json(allProjects);
 });
 
-projectsRouter.get('/:id', async (req, res) => {
+projectsRouter.get("/:id", async (req, res) => {
 	const project = await prisma.project.findUnique({
 		where: {
 			id: Number(req.params.id),
@@ -17,7 +17,7 @@ projectsRouter.get('/:id', async (req, res) => {
 	res.json(project);
 });
 
-projectsRouter.post('/', async (req, res) => {
+projectsRouter.post("/", async (req, res) => {
 	const project = await prisma.project.create({
 		data: {
 			title: req.body.title,
@@ -28,7 +28,7 @@ projectsRouter.post('/', async (req, res) => {
 	res.json(project);
 });
 
-projectsRouter.put('/:id', async (req, res) => {
+projectsRouter.put("/:id", async (req, res) => {
 	const project = await prisma.project.update({
 		where: {
 			id: Number(req.params.id),
