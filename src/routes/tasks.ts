@@ -1,45 +1,21 @@
-import express, { Router } from 'express';
-import prisma from '../client';
+import { Router } from "express";
+import {
+	createTask,
+	getAllTasks,
+	getTaskById,
+	updateTask,
+} from "./tasks.controllers";
 
-export const tasksRouter: Router = express.Router();
+export const tasksRouter = Router();
 
-tasksRouter.get('/', async (req, res) => {
-	const allTasks = await prisma.task.findMany();
-	res.json(allTasks);
-});
+// GET /tasks
+tasksRouter.get("/", getAllTasks);
 
-tasksRouter.get('/:id', async (req, res) => {
-	const task = await prisma.task.findUnique({
-		where: {
-			id: Number(req.params.id),
-		},
-	});
-	res.json(task);
-});
+// GET /tasks/:id
+tasksRouter.get("/:id", getTaskById);
 
-tasksRouter.post('/', async (req, res) => {
-	const task = await prisma.task.create({
-		data: {
-			title: req.body.title,
-			body: req.body.body,
-			completed: req.body.completed,
-		},
-	});
-	res.json(task);
-});
+// POST /tasks
+tasksRouter.post("/", createTask);
 
-tasksRouter.put('/:id', async (req, res) => {
-	const task = await prisma.task.update({
-		where: {
-			id: Number(req.params.id),
-		},
-		data: {
-			title: req.body.title,
-			body: req.body.body,
-			completed: req.body.completed,
-			archived: req.body.archived,
-			deleted: req.body.deleted,
-		},
-	});
-	res.json(task);
-});
+// PUT /tasks/:id
+tasksRouter.put("/:id", updateTask);
