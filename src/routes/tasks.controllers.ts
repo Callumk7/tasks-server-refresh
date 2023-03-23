@@ -33,8 +33,8 @@ export const createTask = async (req: Request, res: Response) => {
 
 // update a task
 export const updateTask = async (req: Request, res: Response) => {
-	// for now, we will provide the task id in the request body
-	const { id, title, body, completed, archived, deleted } = req.body;
+	const { id } = req.params;
+	const { title, body, completed, archived, deleted } = req.body;
 	const updatedTask = await prisma.task.update({
 		where: {
 			id: Number(id),

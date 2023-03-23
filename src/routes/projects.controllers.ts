@@ -40,8 +40,8 @@ export const createProject = async (req: Request, res: Response) => {
 
 // update a project
 export const updateProject = async (req: Request, res: Response) => {
-	// for now, we will provide the project id in the request body
-	const { id, title, body, completed, archived, deleted } = req.body;
+	const { id } = req.params;
+	const { title, body, completed, archived, deleted } = req.body;
 	const updatedProject = await prisma.project.update({
 		where: {
 			id: Number(id),
