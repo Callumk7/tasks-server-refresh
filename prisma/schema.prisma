@@ -27,3 +27,11 @@ model Task {
     deleted   Boolean  @default(false)
     project   Project? @relation(fields: [projectId], references: [id])
 }
+
+model Event {
+    id        Int      @id @default(autoincrement())
+    type      String
+    route     String
+    data      String?
+    timestamp DateTime @default(now())
+}
