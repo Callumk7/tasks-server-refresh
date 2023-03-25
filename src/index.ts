@@ -16,10 +16,9 @@ app.get("/", (req: Request, res: Response) => {
 	res.send("Please use the correct endpoint to access data");
 });
 
+app.use(logger); // Log all requests
 app.use("/tasks", tasksRouter);
 app.use("/projects", projectsRouter);
-
-app.use(logger); // Log all requests
 
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
