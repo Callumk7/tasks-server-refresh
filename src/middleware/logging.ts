@@ -7,11 +7,13 @@ export const logger = async (
 	next: NextFunction
 ) => {
 	next();
-	const { method, path } = req;
+	const { method, path, body } = req;
+	const data = JSON.stringify(body);
 	const event = await prisma.event.create({
 		data: {
 			type: method,
 			route: path,
+			data: data,
 		},
 	});
 	console.log(event);

@@ -11,7 +11,6 @@ const port = process.env.PORT || 8080;
 
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON bodies
-app.use(logger); // Log all requests
 
 app.get("/", (req: Request, res: Response) => {
 	res.send("Please use the correct endpoint to access data");
@@ -20,15 +19,14 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/tasks", tasksRouter);
 app.use("/projects", projectsRouter);
 
+app.use(logger); // Log all requests
+
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
 });
 
 // todo
-// 1. projects
 // 2. add users
 // 3. add auth
-// 4. add time stamps to all events
-// 5. add logging
 // 6. add tests
 // 7. add data models
