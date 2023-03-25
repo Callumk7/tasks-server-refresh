@@ -3,7 +3,11 @@ import prisma from "../client";
 
 // get all tasks
 export const getAllTasks = async (req: Request, res: Response) => {
-	const tasks = await prisma.task.findMany();
+	const tasks = await prisma.task.findMany({
+		include: {
+			project: true,
+		},
+	});
 	res.json(tasks);
 };
 
