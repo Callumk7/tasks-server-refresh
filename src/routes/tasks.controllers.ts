@@ -3,7 +3,12 @@ import prisma from "../client";
 
 // get all tasks
 export const getAllTasks = async (req: Request, res: Response) => {
-	const tasks = await prisma.task.findMany();
+	const tasks = await prisma.task.findMany({
+		where: {
+			deleted: false,
+			archived: false,
+		},
+	});
 	res.json(tasks);
 };
 
@@ -48,4 +53,18 @@ export const updateTask = async (req: Request, res: Response) => {
 		},
 	});
 	res.json(updatedTask);
+};
+
+// Mark a task as deleted
+export const markTaskAsDeleted = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const deletedTask = await prisma.task.update({
+		where: {
+			id: Number(id),
+		},
+		data: {
+			deleted: true,
+		},
+	});
+	res.json(deletedTask);
 };
