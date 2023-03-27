@@ -4,7 +4,7 @@ import {
 	getProjectById,
 	getAllProjects,
 	updateProject,
-} from "./projects.controllers";
+} from "../controllers/projects";
 
 export const projectsRouter = Router();
 
