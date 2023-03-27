@@ -4,7 +4,7 @@ import {
 	getAllTasks,
 	getTaskById,
 	updateTask,
-} from "./tasks.controllers";
+} from "../controllers/tasks";
 
 export const tasksRouter = Router();
 
