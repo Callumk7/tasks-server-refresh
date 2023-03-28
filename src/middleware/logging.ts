@@ -7,6 +7,11 @@ export const logger = async (
 	next: NextFunction
 ) => {
 	const { method, originalUrl, body } = req;
+	if (originalUrl === "/healthz") {
+		next();
+		return;
+	}
+
 	const data = JSON.stringify(body);
 	const event = await prisma.event.create({
 		data: {
