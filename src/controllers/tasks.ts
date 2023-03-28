@@ -51,6 +51,9 @@ export const createTask = async (
 ) => {
 	try {
 		const { title, body } = req.body;
+		if (!title) {
+			throw new Error("Title is required");
+		}
 		const newTask = await prisma.task.create({
 			data: {
 				title,
