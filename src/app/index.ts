@@ -14,5 +14,9 @@ app.get("/", (_req: Request, res: Response) => {
 	res.send("Please use the correct endpoint to access data");
 });
 
+app.get("/healthz", (_req: Request, res: Response) => {
+	res.send("OK");
+});
+
 app.use("/tasks", tasksRouter);
 app.use("/projects", projectsRouter);
