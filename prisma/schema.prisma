@@ -27,6 +27,7 @@ model Task {
     archived  Boolean  @default(false)
     deleted   Boolean  @default(false)
     project   Project? @relation(fields: [projectId], references: [id])
+    createdAt DateTime @default(now())
 }
 
 model Event {

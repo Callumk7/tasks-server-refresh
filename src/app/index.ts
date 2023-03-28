@@ -14,6 +14,7 @@ app.get("/", (_req: Request, res: Response) => {
 	res.send("Please use the correct endpoint to access data");
 });
 
+// Health check endpoint for Render
 app.get("/healthz", (_req: Request, res: Response) => {
 	res.send("OK");
 });
