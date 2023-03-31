@@ -7,15 +7,7 @@ import {
 } from "../controllers/tasks";
 
 export const tasksRouter = Router();
-
-// GET /tasks
 tasksRouter.get("/", getAllTasks);
-
-// GET /tasks/:id
 tasksRouter.get("/:id", getTaskById);
-
-// POST /tasks
 tasksRouter.post("/", createTask);
-
-// PUT /tasks/:id
-tasksRouter.put("/:id", updateTask);
+tasksRouter.patch("/:id", updateTask);
