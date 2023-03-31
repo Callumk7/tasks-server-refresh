@@ -3,12 +3,7 @@ import createError from "http-errors";
 import { Task } from "@prisma/client";
 import prisma from "../client";
 
-// get all tasks
-export const getAllTasks = async (
-	_req: Request,
-	res: Response<Task[]>,
-	next: NextFunction
-) => {
+export const getAllTasks = async (_req: Request, res: Response<Task[]>, next: NextFunction) => {
 	try {
 		const tasks = await prisma.task.findMany({
 			where: {
@@ -17,34 +12,14 @@ export const getAllTasks = async (
 			},
 		});
 		res.json(tasks);
-        next();
+		res.status(200);
+		res.statusMessage = "Tasks retrieved successfully";
+		next();
 	} catch (error) {
 		next(error);
 	}
 };
 
-// get a task by id
-export const getTaskById = async (
-	req: Request<{ id: string }>,
-	res: Response<Task>,
-	next: NextFunction
-) => {
-	try {
-		const { id } = req.params;
-		const task = await prisma.task.findUnique({
-			where: {
-				id: Number(id),
-			},
-		});
-		if (!task) {
-			throw createError(404, `Task with id ${id} not found`);
-		}
-		res.json(task);
-	} catch (error) {
-		next(error);
-	}
-};
-// create a task
 export const createTask = async (
 	req: Request<null, null, { title: string; body: string }>,
 	res: Response<Task>,
@@ -53,7 +28,7 @@ export const createTask = async (
 	try {
 		const { title, body } = req.body;
 		if (!title) {
-			throw new Error("Title is required");
+			throw createError(400, "Title is required");
 		}
 		const newTask = await prisma.task.create({
 			data: {
@@ -62,34 +37,39 @@ export const createTask = async (
 			},
 		});
 		res.json(newTask);
-        next();
+		res.status(201);
+		res.statusMessage = "Task created successfully";
+		next();
 	} catch (error) {
 		next(error);
 	}
 };
 
-// update a task
-export const updateTask = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { id } = req.params;
-        const { title, body, completed, archived, deleted } = req.body;
-        const updatedTask = await prisma.task.update({
-            where: {
-                id: Number(id),
-            },
-            data: {
-                title,
-                body,
-                completed,
-                archived,
-                deleted,
-            },
-        });
-        res.json(updatedTask);
-        res.status(200).json({ message: "Task updated successfully" });
-        next();
-    } catch (error) {
-        next(error);
-    }
+export const updateTask = async (
+	req: Request<{ id: number }>,
+	res: Response<Task>,
+	next: NextFunction
+) => {
+	try {
+		const { id } = req.params;
+		const { title, body, completed, archived, deleted } = req.body;
+		const updatedTask = await prisma.task.update({
+			where: {
+				id: Number(id),
+			},
+			data: {
+				title,
+				body,
+				completed,
+				archived,
+				deleted,
+			},
+		});
+		res.json(updatedTask);
+		res.status(200);
+		res.statusMessage = "Task updated successfully";
+		next();
+	} catch (error) {
+		next(error);
+	}
 };
-
