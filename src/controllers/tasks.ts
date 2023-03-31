@@ -86,6 +86,7 @@ export const updateTask = async (req: Request, res: Response, next: NextFunction
             },
         });
         res.json(updatedTask);
+        res.status(200).json({ message: "Task updated successfully" });
         next();
     } catch (error) {
         next(error);
