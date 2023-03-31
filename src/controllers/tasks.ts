@@ -17,6 +17,7 @@ export const getAllTasks = async (
 			},
 		});
 		res.json(tasks);
+        next();
 	} catch (error) {
 		next(error);
 	}
@@ -61,40 +62,33 @@ export const createTask = async (
 			},
 		});
 		res.json(newTask);
+        next();
 	} catch (error) {
 		next(error);
 	}
 };
 
 // update a task
-export const updateTask = async (req: Request, res: Response) => {
-	const { id } = req.params;
-	const { title, body, completed, archived, deleted } = req.body;
-	const updatedTask = await prisma.task.update({
-		where: {
-			id: Number(id),
-		},
-		data: {
-			title,
-			body,
-			completed,
-			archived,
-			deleted,
-		},
-	});
-	res.json(updatedTask);
+export const updateTask = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const { title, body, completed, archived, deleted } = req.body;
+        const updatedTask = await prisma.task.update({
+            where: {
+                id: Number(id),
+            },
+            data: {
+                title,
+                body,
+                completed,
+                archived,
+                deleted,
+            },
+        });
+        res.json(updatedTask);
+        next();
+    } catch (error) {
+        next(error);
+    }
 };
 
-// Mark a task as deleted
-export const markTaskAsDeleted = async (req: Request, res: Response) => {
-	const { id } = req.params;
-	const deletedTask = await prisma.task.update({
-		where: {
-			id: Number(id),
-		},
-		data: {
-			deleted: true,
-		},
-	});
-	res.json(deletedTask);
-};
