@@ -30,12 +30,14 @@ export const createTask = async (
 		if (!title) {
 			throw createError(400, "Title is required");
 		}
+
 		const newTask = await prisma.task.create({
 			data: {
 				title,
 				body,
 			},
 		});
+
 		res.json(newTask);
 		res.status(201);
 		res.statusMessage = "Task created successfully";

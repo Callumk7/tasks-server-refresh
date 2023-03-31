@@ -19,5 +19,6 @@ app.get("/healthz", (_req: Request, res: Response) => {
 	res.send("OK");
 });
 
+// Routes
 app.use("/tasks", tasksRouter);
 app.use("/projects", projectsRouter);
