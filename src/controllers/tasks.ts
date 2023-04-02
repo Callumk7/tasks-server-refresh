@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
-import { Task } from "@prisma/client";
+import { Prisma, Task } from "@prisma/client";
 import prisma from "../client";
 
 export const getAllTasks = async (_req: Request, res: Response<Task[]>, next: NextFunction) => {
@@ -54,6 +54,13 @@ export const updateTask = async (
 ) => {
 	try {
 		const { id } = req.params;
+
+		// error handling
+		if (!id) {
+			throw createError(400, "Task ID is required");
+		} else if (isNaN(Number(id))) {
+			throw createError(400, "Task ID must be a number");
+		}
 		const { title, body, completed, archived, deleted } = req.body;
 		const updatedTask = await prisma.task.update({
 			where: {
@@ -72,6 +79,12 @@ export const updateTask = async (
 		res.statusMessage = "Task updated successfully";
 		next();
 	} catch (error) {
+		if (error instanceof Prisma.PrismaClientKnownRequestError) {
+			if (error.code === "P2025") {
+				error.message = "Task not found";
+				res.status(404);
+			}
+		}
 		next(error);
 	}
 };
