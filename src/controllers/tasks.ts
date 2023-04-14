@@ -21,12 +21,12 @@ export const getAllTasks = async (_req: Request, res: Response<Task[]>, next: Ne
 };
 
 export const createTask = async (
-	req: Request<null, null, { title: string; body: string }>,
+	req: Request<null, null, { title: string; body: string; projectId: number }>,
 	res: Response<Task>,
 	next: NextFunction
 ) => {
 	try {
-		const { title, body } = req.body;
+		const { title, body, projectId } = req.body;
 		if (!title) {
 			throw createError(400, "Title is required");
 		}
@@ -35,6 +35,7 @@ export const createTask = async (
 			data: {
 				title,
 				body,
+				projectId,
 			},
 		});
 
