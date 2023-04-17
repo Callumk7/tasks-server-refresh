@@ -21,12 +21,12 @@ export const getAllTasks = async (_req: Request, res: Response<Task[]>, next: Ne
 };
 
 export const createTask = async (
-	req: Request<null, null, { title: string; body: string; projectId: number }>,
+	req: Request<null, null, Task>, // why was this not already set to Task? There is no error?
 	res: Response<Task>,
 	next: NextFunction
 ) => {
 	try {
-		const { title, body, projectId } = req.body;
+		const { title, body, projectId, dueDate } = req.body;
 		if (!title) {
 			throw createError(400, "Title is required");
 		}
@@ -36,6 +36,7 @@ export const createTask = async (
 				title,
 				body,
 				projectId,
+				dueDate,
 			},
 		});
 
